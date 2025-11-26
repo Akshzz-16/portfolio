@@ -220,30 +220,34 @@ nav {
 /* ==================================== */
 
 @media (max-width: 768px) {
-    /* --- Navigation Bar Adjustments --- */
+    /* --- Navigation Bar Adjustments (GIF beside Links, Centered) --- */
     nav {
-        flex-direction: column; /* Stack items vertically */
+        flex-direction: row; 
+        justify-content: center; 
         height: auto;
-        padding: 0.5rem 1rem;
+        padding: 0; 
+        flex-wrap: wrap; 
     }
 
     .nav-keyboard-gif {
-        display: none; /* Hide GIF on smaller screens to save space */
+        display: block; 
+        margin-bottom: 0; 
+        margin-right: 15px; 
     }
     
     .nav-links-center {
         gap: 15px;
-        width: 100%;
-        justify-content: space-around; /* Distribute links evenly */
-        padding: 0.5rem 0;
-    }
-
-    .nav-placeholder {
-        display: none; /* No need for placeholder when the GIF is hidden */
+        /* Removed width: 100% so the UL shrinks to fit content and sits next to the GIF */
+        justify-content: center; /* Group links beside the GIF */
+        padding: 0.5rem 0; 
     }
 
     .nav-links-center a {
-        font-size: 1rem; /* Slightly smaller font for links */
+        font-size: 0.9rem; /* UPDATED: Shrink text as requested */
+    }
+
+    .nav-placeholder {
+        display: none; 
     }
 
     /* --- Profile Section Adjustments --- */
@@ -256,21 +260,21 @@ nav {
         margin: 1.5rem 1rem;
     }
 
-    /* Glass Cards stack vertically and take full width of container */
+    /* Glass Cards stack vertically and are centered */
     .card-container {
         flex-direction: column;
         gap: 1.5rem;
     }
 
     .glass-card {
-        width: 90%; /* Take up most of the screen width */
-        max-width: 350px; /* But don't get too large on big screens */
-        margin: 0 auto;
+        width: 80%; 
+        max-width: 300px; 
+        margin: 0 auto; 
     }
 
     /* Remove hover scaling on mobile to avoid layout shifts when tapping */
     .glass-card:hover {
         transform: none;
-        box-shadow: 0 8px 40px rgba(0,0,0,0.6); /* Keep default shadow */
+        box-shadow: 0 8px 40px rgba(0,0,0,0.6); 
     }
 }
