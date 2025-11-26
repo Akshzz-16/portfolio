@@ -28,11 +28,24 @@ function handleNavLinkClick(event, contentFunction) {
     const currentLink = event.currentTarget; // The 'a' tag
     
     // The active class is removed inside switchContent, so we apply it after the timeout.
-    // However, for immediate visual feedback, let's wait slightly less than the fade-out duration
     setTimeout(() => {
         currentLink.classList.add('active');
     }, 450); 
 }
+
+// Function to handle content loading from non-link elements (like the GIF)
+function handleContentLoad(contentFunction, setActiveId = null) {
+    // Call the specific content function
+    contentFunction();
+
+    // Set the active class on the specified ID (for the red underline)
+    setTimeout(() => {
+        if (setActiveId) {
+            document.getElementById(setActiveId)?.classList.add('active');
+        }
+    }, 450);
+}
+
 
 // --- Content Functions ---
 
@@ -88,24 +101,30 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('home').classList.add('active');
 
 
-    // 2. Navigation Click Handlers (using the new unified handler)
+    // 2. Navigation Click Handlers
     document.getElementById('home').addEventListener('click', (event) => handleNavLinkClick(event, loadHomePage));
     document.getElementById('about').addEventListener('click', (event) => handleNavLinkClick(event, loadAboutPage));
     document.getElementById('projects').addEventListener('click', (event) => handleNavLinkClick(event, loadProjectsPage));
 
 
-  // 3. Glitch Effect Handler
-  const keyboardGif = document.querySelector('.nav-keyboard-gif');
-  const targetElement = document.getElementById('main-body');
+    // 3. Keyboard GIF Click Handler (MODIFIED to include both glitch and home redirect)
+    const keyboardGif = document.querySelector('.nav-keyboard-gif');
+    const targetElement = document.getElementById('main-body');
 
-  if (keyboardGif && targetElement) {
-    keyboardGif.addEventListener('click', () => {
-      targetElement.classList.add('glitch-active');
-      const glitchDuration = 400; 
+    if (keyboardGif && targetElement) {
+        keyboardGif.addEventListener('click', (event) => {
+            event.preventDefault(); 
+            
+            // A. Trigger Glitch Effect
+            targetElement.classList.add('glitch-active');
+            const glitchDuration = 400; 
 
-      setTimeout(() => {
-        targetElement.classList.remove('glitch-active');
-      }, glitchDuration);
-    });
-  }
+            setTimeout(() => {
+                targetElement.classList.remove('glitch-active');
+            }, glitchDuration);
+            
+            // B. Load Home Page with fade effect
+            handleContentLoad(loadHomePage, 'home');
+        });
+    }
 });

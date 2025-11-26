@@ -214,3 +214,63 @@ nav {
     transform: translate(0, 0); 
   }
 }
+
+/* ==================================== */
+/* 💻 RESPONSIVENESS (Media Queries) */
+/* ==================================== */
+
+@media (max-width: 768px) {
+    /* --- Navigation Bar Adjustments --- */
+    nav {
+        flex-direction: column; /* Stack items vertically */
+        height: auto;
+        padding: 0.5rem 1rem;
+    }
+
+    .nav-keyboard-gif {
+        display: none; /* Hide GIF on smaller screens to save space */
+    }
+    
+    .nav-links-center {
+        gap: 15px;
+        width: 100%;
+        justify-content: space-around; /* Distribute links evenly */
+        padding: 0.5rem 0;
+    }
+
+    .nav-placeholder {
+        display: none; /* No need for placeholder when the GIF is hidden */
+    }
+
+    .nav-links-center a {
+        font-size: 1rem; /* Slightly smaller font for links */
+    }
+
+    /* --- Profile Section Adjustments --- */
+    .profile {
+        margin: 1.5rem 0;
+    }
+
+    /* --- Content Adjustments --- */
+    #content {
+        margin: 1.5rem 1rem;
+    }
+
+    /* Glass Cards stack vertically and take full width of container */
+    .card-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .glass-card {
+        width: 90%; /* Take up most of the screen width */
+        max-width: 350px; /* But don't get too large on big screens */
+        margin: 0 auto;
+    }
+
+    /* Remove hover scaling on mobile to avoid layout shifts when tapping */
+    .glass-card:hover {
+        transform: none;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.6); /* Keep default shadow */
+    }
+}
