@@ -33,18 +33,25 @@ function handleNavLinkClick(event, contentFunction) {
     }, 450); 
 }
 
-// Function to handle content loading from non-link elements (like the GIF)
-function handleContentLoad(contentFunction, setActiveId = null) {
-    // Call the specific content function
-    contentFunction();
-
-    // Set the active class on the specified ID (for the red underline)
-    setTimeout(() => {
-        if (setActiveId) {
-            document.getElementById(setActiveId)?.classList.add('active');
+// --- Reusable Typewriter Function ---
+function typewriterEffect(element, text, speed) {
+    let i = 0;
+    element.textContent = ''; // Clear existing content
+    element.classList.add('typing-cursor'); // Add cursor class
+    
+    function type() {
+        if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        } else {
+            // REMOVE the cursor class when typing is done
+            element.classList.remove('typing-cursor');
         }
-    }, 450);
+    }
+    type();
 }
+// ----------------------------------------
 
 
 // --- Content Functions ---
@@ -56,16 +63,19 @@ const loadHomePage = () => {
 
 const loadAboutPage = () => {
   const text = "Hello! I'm Akash, a playful developer who loves building desktop apps, web apps, and creative projects.";
+  
+  // Insert the content with the placeholder for the typing element
   switchContent(`<h2>About Me</h2><p id="typing"></p>`, () => {
-    let i = 0;
-    function typeWriter() {
-      if (i < text.length) {
-        document.getElementById("typing").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 50);
-      }
+    const typingElement = document.getElementById("typing"); 
+    if (typingElement) {
+        // NEW: Apply the fade-in class to the element
+        typingElement.classList.add('fade-in'); 
+        
+        // Start typing after a small delay (100ms) to ensure the fade animation begins first
+        setTimeout(() => {
+            typewriterEffect(typingElement, text, 50);
+        }, 100); 
     }
-    typeWriter();
   });
 };
 
@@ -96,35 +106,42 @@ const loadProjectsPage = () => {
 
 // --- DOM Ready Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initial Load: Load the home page content and set the active class
-    loadHomePage();
-    document.getElementById('home').classList.add('active');
+    // 1. Initial Load: Load the ABOUT page content and set the active class
+    loadAboutPage();
+    document.getElementById('about').classList.add('active');
 
 
-    // 2. Navigation Click Handlers
+    // 2. Navigation Click Handlers (using the new unified handler)
     document.getElementById('home').addEventListener('click', (event) => handleNavLinkClick(event, loadHomePage));
     document.getElementById('about').addEventListener('click', (event) => handleNavLinkClick(event, loadAboutPage));
     document.getElementById('projects').addEventListener('click', (event) => handleNavLinkClick(event, loadProjectsPage));
 
 
-    // 3. Keyboard GIF Click Handler (MODIFIED to include both glitch and home redirect)
+    // 3. Glitch Effect Handler (for keyboard GIF)
     const keyboardGif = document.querySelector('.nav-keyboard-gif');
     const targetElement = document.getElementById('main-body');
 
     if (keyboardGif && targetElement) {
-        keyboardGif.addEventListener('click', (event) => {
-            event.preventDefault(); 
+        keyboardGif.addEventListener('click', () => {
+            // 1. Load the Home Page content
+            loadHomePage(); 
             
-            // A. Trigger Glitch Effect
+            // 2. Update the active link visual
+            document.querySelectorAll('.nav-links-center a').forEach(a => {
+                a.classList.remove('active');
+            });
+            document.getElementById('home').classList.add('active');
+
+
+            // 3. Apply the glitch effect
             targetElement.classList.add('glitch-active');
             const glitchDuration = 400; 
 
             setTimeout(() => {
                 targetElement.classList.remove('glitch-active');
             }, glitchDuration);
-            
-            // B. Load Home Page with fade effect
-            handleContentLoad(loadHomePage, 'home');
         });
     }
+
+    // 4. Typing Effect for GitHub and LinkedIn has been removed.
 });
