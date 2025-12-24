@@ -1,33 +1,40 @@
+/* --- Global Styles --- */
 body {
- background-color: #000000;
- color: #ffffff;
- font-family: 'Science Gothic', sans-serif;
- margin: 0;
- padding: 0;
- text-align: center;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Science Gothic', sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;                
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; 
 }
 
-/* --- Navigation Bar Layout & Centering --- */
+/* --- Navigation Bar --- */
 nav {
   display: flex;
   justify-content: space-between; 
   align-items: center;
-  padding: 0 2rem;
+  padding: 0 1rem; 
   height: 70px; 
   background-color: #1a1a1a;
+  width: 100%;
+  box-sizing: border-box; 
+  flex-shrink: 0; 
+  z-index: 100;
+  order: 1; /* Top on desktop */
 }
 
-/* --- Styled Keyboard GIF --- */
 .nav-keyboard-gif {
   height: 60px; 
   width: auto; 
   cursor: pointer;
   image-rendering: pixelated; 
-  image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
 
-/* --- Centered Links Styling --- */
 .nav-links-center {
   list-style: none;
   display: flex;
@@ -39,14 +46,11 @@ nav {
 .nav-links-center a {
   text-decoration: none;
   color: #fff;
-  font-family: 'Science Gothic', sans-serif;
   font-size: 1.1rem;
   padding-bottom: 5px; 
   position: relative; 
-  display: inline-block; 
 }
 
-/* Sliding Underline Base */
 .nav-links-center a::after {
   content: ''; 
   position: absolute;
@@ -58,224 +62,195 @@ nav {
   transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1); 
 }
 
-/* Sliding Underline Hover/Active State */
 .nav-links-center a:hover::after,
 .nav-links-center a.active::after {
   width: 100%; 
 }
 
-/* --- Placeholder for Centering --- */
 .nav-placeholder {
-  width: 60px; /* Should match GIF width */
-  height: 1px;
+  width: 60px; 
 }
 
 /* --- Profile Section --- */
 .profile {
- margin: 2rem 0;
+  margin: 1rem 0 0 0; 
+  flex-shrink: 0; 
+  order: 2;
 }
 
 .profile-pic {
- width: 150px;
- height: 150px;
- border-radius: 50%;
- transition: transform 1s ease-in-out;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  transition: transform 1s ease-in-out;
 }
 
 .profile-pic:hover {
- transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .links a {
- color: #00ffcc;
- text-decoration: none;
- margin: 0 0.5rem;
+  color: #00ffcc;
+  text-decoration: none;
+  margin: 0 0.5rem;
 }
 
-.links a:hover {
- text-decoration: underline;
-}
-
-/* --- Content Container --- */
+/* --- Content Layout --- */
 #content {
- margin: 2rem auto;
- max-width: 800px;
- text-align: center;
+  margin: 0 auto;
+  max-width: 1000px; 
+  width: 100%;                
+  padding: 0 10px;
+  box-sizing: border-box;
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Items start at top */
+  overflow: hidden;
+  order: 3;
 }
 
-/* --- Glassmorphism Cards --- */
+/* --- HOME PAGE: ANCHORED COFFEE CUP --- */
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto; /* <--- This pushes the cup to the bottom */
+  padding-bottom: 30px; /* Distance from the bottom edge or navbar */
+  width: 100%;
+}
+
+.static-coffee-wrapper {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.static-pixel-coffee-img {
+  width: 120px;
+  height: auto;
+  image-rendering: pixelated;
+  display: block;
+  z-index: 2;
+}
+
+.steam-container-above {
+  display: flex;
+  gap: 12px;
+  height: 40px;
+  width: 70px;
+  justify-content: center;
+  margin-bottom: -15px; 
+  z-index: 1;
+}
+
+.steam-puff {
+  width: 6px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 2px -2px 0 rgba(255,255,255,0.3);
+  animation: steam-rise-pixel 2.5s infinite ease-out;
+}
+
+.puff-1 { animation-delay: 0s; }
+.puff-2 { animation-delay: 0.8s; }
+.puff-3 { animation-delay: 1.6s; }
+
+/* --- Projects: Glassmorphism Cards --- */
 .card-container {
- display: flex;
- justify-content: center;
- gap: 2rem;
- flex-wrap: wrap;
- margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding-bottom: 20px;
+  overflow-y: auto; /* Allow projects to scroll independently */
 }
 
 .glass-card {
- background: rgba(255, 255, 255, 0.08);
- border-radius: 15px;
- padding: 2rem;
- width: 280px;
- backdrop-filter: blur(15px) saturate(150%);
- -webkit-backdrop-filter: blur(15px) saturate(150%);
- border: 1px solid rgba(255, 255, 255, 0.25);
- color: #ffffff;
- box-shadow: 0 8px 40px rgba(0,0,0,0.6);
- transition: transform 0.4s ease, box-shadow 0.4s ease;
- position: relative;
- overflow: hidden;
- cursor: pointer;
- opacity: 0; /* start hidden */
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  padding: 2rem;
+  width: 280px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  opacity: 0; 
+  cursor: pointer;
 }
 
-/* Smooth fade-in animation */
-.fade-in {
- animation: fadeInUp 0.8s forwards;
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 600px) {
+  .profile { order: 1; }
+  #content { order: 2; }
+  nav { 
+    order: 3; /* Move to bottom */
+    height: 65px;
+    padding-bottom: env(safe-area-inset-bottom);
+    border-top: 1px solid #333;
+  }
+
+  .nav-links-center a::after {
+    bottom: auto;
+    top: -5px;
+  }
+
+  .home-container {
+    padding-bottom: 15px; /* Tighter fit above the bottom navbar */
+  }
+
+  .static-pixel-coffee-img {
+    width: 90px;
+  }
+
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+  }
+
+  .glass-card {
+    width: 90%;
+  }
 }
 
+/* --- General Animations --- */
+@keyframes steam-rise-pixel {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  20% { opacity: 0.8; }
+  100% { transform: translateY(-45px) translateX(8px) scale(1.8); opacity: 0; }
+}
+
+.fade-in { animation: fadeInUp 0.8s forwards; }
 @keyframes fadeInUp {
- from {
-  opacity: 0;
-  transform: translateY(20px);
- }
- to {
-  opacity: 1;
-  transform: translateY(0);
- }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hover effect: bigger scale + red glow */
-.glass-card:hover {
- transform: translateY(-8px) scale(1.05); /* Slightly reduced scale to fit in viewport better */
- box-shadow: 0 5px 5px #00ffcc;
-}
+.fade-out { animation: fadeOut 0.5s forwards; }
+@keyframes fadeOut { to { opacity: 0; } }
 
-/* Fade-out animation */
-.fade-out {
- animation: fadeOut 0.5s forwards;
-}
-
-@keyframes fadeOut {
- to {
-  opacity: 0;
- }
-}
-
-/* Typing cursor effect */
-#typing::after {
- content: "|";
- animation: blink 1s infinite;
+.typing-cursor::after {
+  content: "|";
+  animation: blink 1s infinite;
 }
 
 @keyframes blink {
- 0% { opacity: 1; }
- 50% { opacity: 0; }
- 100% { opacity: 1; }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-/* --- GLITCH EFFECT CSS --- */
-
-/* Class toggled by JavaScript */
+/* --- Glitch Effect --- */
 #main-body.glitch-active {
-  /* Base glitch animation */
   animation: glitch-color-shift 0.1s infinite alternate steps(1); 
   filter: saturate(1.8) contrast(1.5);
-  position: relative; 
-  top: 0; 
-  left: 0;
-  width: 100%;
-  overflow-x: hidden; 
 }
 
-/* Apply distortion to child elements */
-#main-body.glitch-active * {
-  transform: skew(-0.5deg) scaleY(1.005);
-  opacity: 0.9;
-  transition: none !important; 
-}
-
-/* RGB Color Shift Animation */
 @keyframes glitch-color-shift {
-  0% { 
-    text-shadow: 3px 0 0 #ff00c1, -3px 0 0 #00ffff;
-    transform: translate(3px, 3px); 
-  }
-  33% { 
-    text-shadow: 3px 0 0 #00ffff, -3px 0 0 #ff00c1;
-    transform: translate(-3px, 0); 
-  }
-  66% { 
-    text-shadow: 3px 0 0 #f0ff00, -3px 0 0 #00ff0a;
-    transform: translate(0, -3px); 
-  }
-  100% { 
-    text-shadow: 3px 0 0 #ff00c1, -3px 0 0 #00ffff;
-    transform: translate(0, 0); 
-  }
+  0% { text-shadow: 3px 0 0 #ff00c1, -3px 0 0 #00ffff; transform: translate(3px, 3px); }
+  33% { text-shadow: 3px 0 0 #00ffff, -3px 0 0 #ff00c1; transform: translate(-3px, 0); }
+  100% { text-shadow: 3px 0 0 #ff00c1, -3px 0 0 #00ffff; transform: translate(0, 0); }
 }
-
-/* ==================================== */
-/* 💻 RESPONSIVENESS (Media Queries) */
-/* ==================================== */
-
-@media (max-width: 768px) {
-    /* --- Navigation Bar Adjustments (GIF beside Links, Centered) --- */
-    nav {
-        flex-direction: row; 
-        justify-content: center; 
-        height: auto;
-        padding: 0; 
-        flex-wrap: wrap; 
-    }
-
-    .nav-keyboard-gif {
-        display: block; 
-        margin-bottom: 0; 
-        margin-right: 15px; 
-    }
-    
-    .nav-links-center {
-        gap: 15px;
-        /* Removed width: 100% so the UL shrinks to fit content and sits next to the GIF */
-        justify-content: center; /* Group links beside the GIF */
-        padding: 0.5rem 0; 
-    }
-
-    .nav-links-center a {
-        font-size: 0.9rem; /* UPDATED: Shrink text as requested */
-    }
-
-    .nav-placeholder {
-        display: none; 
-    }
-
-    /* --- Profile Section Adjustments --- */
-    .profile {
-        margin: 1.5rem 0;
-    }
-
-    /* --- Content Adjustments --- */
-    #content {
-        margin: 1.5rem 1rem;
-    }
-
-    /* Glass Cards stack vertically and are centered */
-    .card-container {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .glass-card {
-        width: 80%; 
-        max-width: 300px; 
-        margin: 0 auto; 
-    }
-
-    /* Remove hover scaling on mobile to avoid layout shifts when tapping */
-    .glass-card:hover {
-        transform: none;
-        box-shadow: 0 8px 40px rgba(0,0,0,0.6); 
-    }
-}
-
