@@ -80,12 +80,12 @@ const loadProjectsPage = () => {
             <div class="card-container">
                 <div class="glass-card">
                     <h3>Music Visualizer</h3>
-                    <p>Real-time audio visualization from your speaker itself.</p>
+                    <p>Real-time audio visualization from your speaker.</p>
                     <a href="https://github.com/Akshzz-16/music_visualizer" target="_blank" class="project-btn">view on github</a>
                 </div>
                 <div class="glass-card">
-                    <h3>Portfolio Website</h3>
-                    <p>A high-performance SPA featuring glassmorphism and a non-scrollable UI.</p>
+                    <h3>Tell Us</h3>
+                    <p>Minimalistic UI for a static website.</p>
                     <a href="https://tellusproject.onrender.com/" target="_blank" class="project-btn">visit live site</a>
                 </div>
             </div>
