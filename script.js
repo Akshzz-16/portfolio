@@ -154,7 +154,7 @@ function handlePhysicalKeyup(event) {
 const loadHomePage = () => {
   const homeHTML = `
     <div class="home-container">
-      <a href="https://www.buymeacoffee.com/YOUR_USERNAME" target="_blank" class="static-coffee-wrapper">
+      <a href="https://buymeacoffee.com/akashhh" target="_blank" class="static-coffee-wrapper">
         <div class="steam-container-above">
            <div class="steam-puff puff-1"></div>
            <div class="steam-puff puff-2"></div>
