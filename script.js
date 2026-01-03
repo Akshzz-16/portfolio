@@ -107,6 +107,7 @@ function setupCanvas() {
 
     const ctx = canvas.getContext('2d');
     let width, height;
+    let flowers = []; // Array to store growing flowers
 
     const colors = [
         { petal: '#ff3366', glow: '#ff00ff' },
@@ -122,69 +123,95 @@ function setupCanvas() {
         }
     };
 
-    function drawFlower(x, y) {
-        const style = colors[Math.floor(Math.random() * colors.length)];
+    function createFlower(x, y) {
+        flowers.push({
+            targetX: x,
+            targetY: y,
+            currentHeight: 0, // Growth progress (0 to 1)
+            bloomProgress: 0, // Petal progress (0 to 1)
+            style: colors[Math.floor(Math.random() * colors.length)],
+            stemControlX: x + (Math.random() * 60 - 30),
+            groundX: x + (Math.random() * 40 - 20),
+            petalCount: 6 + Math.floor(Math.random() * 3)
+        });
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
         
-        ctx.shadowBlur = 0;
-        ctx.globalCompositeOperation = 'source-over';
-        for(let i = 0; i < 3; i++) {
+        flowers.forEach(f => {
+            // 1. Grow Stem
+            if (f.currentHeight < 1) f.currentHeight += 0.05; // Stem speed
+            else if (f.bloomProgress < 1) f.bloomProgress += 0.06; // Bloom speed
+
+            // Draw Stem using progress
+            ctx.globalCompositeOperation = 'source-over';
             ctx.beginPath();
-            ctx.moveTo(x + (Math.random()*10 - 5), height);
+            ctx.moveTo(f.groundX, height);
+            
+            // Calculate current tip of the stem based on progress
+            const currentY = height - (height - f.targetY) * f.currentHeight;
             ctx.bezierCurveTo(
-                x + (Math.random()*60 - 30), height * 0.7,
-                x + (Math.random()*40 - 20), y + 100,
-                x, y
+                f.groundX, height - (height - currentY) * 0.5,
+                f.stemControlX, currentY + 50,
+                f.targetX, currentY
             );
-            ctx.strokeStyle = `rgba(60, 100, 40, ${0.3 + (i*0.2)})`;
-            ctx.lineWidth = 3 - i;
+            ctx.strokeStyle = 'rgba(60, 100, 40, 0.7)';
+            ctx.lineWidth = 2;
             ctx.stroke();
-        }
 
-        ctx.globalCompositeOperation = 'screen'; 
-        const petalCount = 6 + Math.floor(Math.random() * 4);
-        const flowerSize = 25 + Math.random() * 15;
+            // 2. Draw Petals if stem is done
+            if (f.currentHeight >= 0.9) {
+                ctx.globalCompositeOperation = 'screen';
+                const size = 30 * f.bloomProgress;
+                
+                for (let i = 0; i < f.petalCount; i++) {
+                    const angle = (i * 2 * Math.PI) / f.petalCount;
+                    ctx.save();
+                    ctx.translate(f.targetX, f.targetY);
+                    ctx.rotate(angle);
+                    
+                    const grad = ctx.createRadialGradient(0, -size/2, 0, 0, -size/2, size);
+                    grad.addColorStop(0, f.style.petal + '99');
+                    grad.addColorStop(1, 'transparent');
+                    
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.ellipse(0, -size/2, size/2, size, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
 
-        for (let i = 0; i < petalCount; i++) {
-            const angle = (i * 2 * Math.PI) / petalCount;
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(angle);
-            const grad = ctx.createRadialGradient(0, -flowerSize/2, 0, 0, -flowerSize/2, flowerSize);
-            grad.addColorStop(0, style.petal + '99');
-            grad.addColorStop(0.8, 'transparent');
-            ctx.fillStyle = grad;
-            ctx.beginPath();
-            ctx.ellipse(0, -flowerSize/2, flowerSize/2, flowerSize, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-        }
+                // 3. Core Glow
+                ctx.globalCompositeOperation = 'lighter';
+                ctx.fillStyle = `rgba(255, 255, 255, ${f.bloomProgress})`;
+                ctx.beginPath();
+                ctx.arc(f.targetX, f.targetY, 4 * f.bloomProgress, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        });
 
-        ctx.globalCompositeOperation = 'lighter';
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = style.glow;
-        ctx.fillStyle = 'white';
-        ctx.beginPath();
-        ctx.arc(x, y, 5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
+        requestAnimationFrame(animate);
     }
 
     const onInteract = (e) => {
-        if (e.type === 'mousedown' || e.buttons !== 0) {
+        if (e.type === 'mousedown' || (e.type === 'mousemove' && e.buttons !== 0)) {
             const rect = canvas.getBoundingClientRect();
-            drawFlower(e.clientX - rect.left, e.clientY - rect.top);
+            createFlower(e.clientX - rect.left, e.clientY - rect.top);
         }
     };
 
     window.addEventListener('resize', resize);
     resize();
+    animate(); // Start loop
 
     canvas.addEventListener('mousedown', onInteract);
     canvas.addEventListener('mousemove', onInteract);
-    if (cleanBtn) cleanBtn.addEventListener('click', () => ctx.clearRect(0, 0, width, height));
+    if (cleanBtn) cleanBtn.addEventListener('click', () => flowers = []);
 
     pageCleanup = () => {
         window.removeEventListener('resize', resize);
+        flowers = [];
     };
 }
 
