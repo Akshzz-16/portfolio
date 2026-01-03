@@ -138,15 +138,15 @@ function setupCanvas() {
     const pointer = {
         x: 0.66,
         y: 0.3,
-        clicked: true,
+        clicked: false,
     };
 
-    // Timer
-    const autoTimer = window.setTimeout(() => {
+    // Timer (Disabled for blank canvas on load)
+    const autoTimer = null;/* window.setTimeout(() => {
         pointer.x = 0.75;
         pointer.y = 0.5;
         pointer.clicked = true;
-    }, 700);
+    }, 700); */
 
     // Interaction Handlers
     const updatePointer = (e) => {
