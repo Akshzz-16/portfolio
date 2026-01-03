@@ -175,52 +175,28 @@ nav {
 }
 
 /* --- Project Boxes --- */
-.projects-wrapper { 
-    padding: 20px 0; 
-    overflow-y: auto; 
-    width: 100%;
-}
-
-<<<<<<< HEAD
+.projects-wrapper { padding: 20px 0; overflow-y: auto; }
 .card-container {
-    display: grid;
-    /* Reduced min-width from 280px to 240px to fit better on small phones */
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-    /* This ensures space on the left and right of the grid itself */
-    width: 90%; 
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 10px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
 }
-
 .glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 20px; /* Slightly reduced padding inside the card */
-    text-align: left;
-    transition: transform 0.3s, border-color 0.3s;
-    /* Ensures the card doesn't stretch to the very edge if the grid only has 1 column */
-    margin: 0 auto; 
-    width: 100%;
-    box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: left;
+  transition: transform 0.3s, border-color 0.3s;
 }
-
-.glass-card:hover { 
-    transform: translateY(-5px); 
-    border-color: #00ffcc; 
-}
-
+.glass-card:hover { transform: translateY(-5px); border-color: #00ffcc; }
 .project-btn {
-    display: inline-block; 
-    padding: 8px 16px;
-    border: 1px solid #00ffcc; 
-    color: #00ffcc;
-    text-decoration: none; 
-    border-radius: 6px;
-    font-size: 0.9rem;
+  display: inline-block; padding: 8px 16px;
+  border: 1px solid #00ffcc; color: #00ffcc;
+  text-decoration: none; border-radius: 6px;
 }
 
 /* --- Home Canvas Container --- */
@@ -296,58 +272,6 @@ nav {
 }
 
 .static-pixel-coffee-img { width: 110px; image-rendering: pixelated; position: relative; z-index: 2;}
-=======
-/* --- Home Coffee --- */
-.home-container { 
-  margin-top: auto; 
-  padding-bottom: 40px; 
-  position: relative; /* Ensure container is positioned for absolute children if needed, though we might go fixed for canvas */
-}
-#canvas {
-    position: fixed; /* Fixed to cover the screen */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* Allow clicks to pass through */
-    z-index: -1; /* Behind everything */
-    opacity: 0.6; /* Slight transparency */
-}
-
-.clean-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.2rem;
-    z-index: 1001;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
-}
-.clean-btn:hover {
-    border-color: #00ffcc;
-    color: #00ffcc;
-    transform: rotate(90deg);
-}
-.clean-btn::before {
-    content: "Refresh";
-    font-family: 'Font Awesome 6 Free'; /* Assuming FA is available */
-    font-weight: 900;
-    content: "\f021"; /* FA refresh icon */
-    font-size: 14px;
-}
-
-.static-pixel-coffee-img { width: 110px; image-rendering: pixelated; }
->>>>>>> 112236a5c8555c605aec9097752dd09515a30afc
 
 /* --- Steam Animation --- */
 .steam-container-above { display: flex; gap: 10px; justify-content: center; margin-bottom: -10px; position: relative; z-index: 2;}
